@@ -54,12 +54,18 @@ struct EmailValidationForm: View {
                        text: $viewModel.email,
                        isValid: $viewModel.isEmailValid)
           .isMandatory()
+          .onValidate { value in
+            value.isEmail() ? .success(true) : .failure(.init(message: "\(value) is not a valid email address"))
+          }
           .autocapitalization(.none)
         
         TextInputField("Confirm your email address",
                        text: $viewModel.emailConfirmation,
                        isValid: $viewModel.isEmailConfirmationValid)
           .isMandatory()
+          .onValidate { value in
+            value.isEmail() ? .success(true) : .failure(.init(message: "\(value) is not a valid email address"))
+          }
           .autocapitalization(.none)
       }
       Section {

@@ -13,6 +13,7 @@ struct TextInputField: View {
   @Binding private var text: String
   @Environment(\.clearButtonHidden) var clearButtonHidden
   @Environment(\.isMandatory) var isMandatory
+  @Environment(\.validationHandler) var validationHandler
   
   @Binding private var isValidBinding: Bool
   @State private var isValid: Bool = true {
@@ -48,12 +49,28 @@ struct TextInputField: View {
   }
   
   fileprivate func validate(_ value: String) {
+    isValid = true
     if isMandatory {
       isValid = !value.isEmpty
       validationMessage = isValid ? "" : "This is a mandatory field"
     }
+    
+    if isValid {
+      guard let validationHandler = self.validationHandler else { return }
+      
+      let validationResult = validationHandler(value)
+      
+      if case .failure(let error) = validationResult {
+        isValid = false
+        self.validationMessage = "\(error.localizedDescription)"
+      }
+      else if case .success(let isValid) = validationResult {
+        self.isValid = isValid
+        self.validationMessage = ""
+      }
+    }
   }
-  
+
   var body: some View {
     ZStack(alignment: .leading) {
       if !isValid {
@@ -62,10 +79,12 @@ struct TextInputField: View {
           .offset(y: -25)
           .scaleEffect(0.8, anchor: .leading)
       }
-      Text(title)
-        .foregroundColor(text.isEmpty ? Color(.placeholderText) : .accentColor)
-        .offset(y: text.isEmpty ? 0 : -25)
-        .scaleEffect(text.isEmpty ? 1: 0.8, anchor: .leading)
+      if (text.isEmpty || isValid) {
+        Text(title)
+          .foregroundColor(text.isEmpty ? Color(.placeholderText) : .accentColor)
+          .offset(y: text.isEmpty ? 0 : -25)
+          .scaleEffect(text.isEmpty ? 1: 0.8, anchor: .leading)
+      }
       TextField("", text: $text)
         .onAppear {
           validate(text)
@@ -116,6 +135,35 @@ extension EnvironmentValues {
   var isMandatory: Bool {
     get { self[TextInputFieldMandatory.self] }
     set { self[TextInputFieldMandatory.self] = newValue }
+  }
+}
+
+// MARK: - Validation Handler
+
+struct ValidationError: Error {
+  let message: String
+}
+
+extension ValidationError: LocalizedError {
+  public var errorDescription: String? {
+    return NSLocalizedString("\(message)", comment: "Message for generic validation errors.")
+  }
+}
+
+private struct TextInputFieldValidationHandler: EnvironmentKey {
+  static var defaultValue: ((String) -> Result<Bool, ValidationError>)?
+}
+
+extension EnvironmentValues {
+  var validationHandler: ((String) -> Result<Bool, ValidationError>)? {
+    get { self[TextInputFieldValidationHandler.self] }
+    set { self[TextInputFieldValidationHandler.self] = newValue }
+  }
+}
+
+extension View {
+  func onValidate(validationHandler: @escaping (String) -> Result<Bool, ValidationError>) -> some View {
+    environment(\.validationHandler, validationHandler)
   }
 }
 

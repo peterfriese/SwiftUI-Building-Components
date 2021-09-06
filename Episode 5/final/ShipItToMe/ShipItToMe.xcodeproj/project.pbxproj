@@ -14,6 +14,7 @@
 		889A037E2618A7450058A56B /* ShipItToMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A037D2618A7450058A56B /* ShipItToMeApp.swift */; };
 		889A03822618A7460058A56B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889A03812618A7460058A56B /* Assets.xcassets */; };
 		889A03852618A7460058A56B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889A03842618A7460058A56B /* Preview Assets.xcassets */; };
+		88BFB92C26E6267600E4394C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BFB92B26E6267600E4394C /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		889A03812618A7460058A56B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		889A03842618A7460058A56B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		889A03862618A7460058A56B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88BFB92B26E6267600E4394C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		889A037C2618A7450058A56B /* ShipItToMe */ = {
 			isa = PBXGroup;
 			children = (
+				88BFB92A26E6266500E4394C /* Extensions */,
 				889A037D2618A7450058A56B /* ShipItToMeApp.swift */,
 				884E832B26E3B8C2005B49DF /* MenuView.swift */,
 				884E832D26E3B8E4005B49DF /* EmailValidationForm.swift */,
@@ -76,6 +79,14 @@
 				889A03842618A7460058A56B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		88BFB92A26E6266500E4394C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				88BFB92B26E6267600E4394C /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +162,7 @@
 				889A037E2618A7450058A56B /* ShipItToMeApp.swift in Sources */,
 				884E832C26E3B8C2005B49DF /* MenuView.swift in Sources */,
 				88358322263D69BE007917FF /* TextInputField.swift in Sources */,
+				88BFB92C26E6267600E4394C /* String+Extensions.swift in Sources */,
 				8831017A261F098D001655D2 /* ShippingForm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
