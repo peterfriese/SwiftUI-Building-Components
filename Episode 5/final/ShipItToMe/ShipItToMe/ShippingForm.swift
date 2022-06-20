@@ -63,7 +63,7 @@ struct ShippingForm: View {
   }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ShippingForm_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
       ShippingForm()
